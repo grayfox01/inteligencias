@@ -1,20 +1,75 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Formulario:</h5>
+          <form #heroForm="ngForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" class="form-control" [(ngModel)]="formulario.nombre" placeholder="nombre" required name="nombre">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" class="form-control" [(ngModel)]="formulario.email" placeholder="email" name="email" required>
+            </div>
+            <h5 class="card-title">Preguntas</h5>
+            <div *ngFor="let pregunta of formulario.preguntas;let i = index" class="form-group">
+              <label>{{i+1}}. {{pregunta.nombre}}</label>
+              <select class="form-control" [(ngModel)]="pregunta.respuesta"  name="pregunta{{i}}" required>
+                <option selected value="null">Seleccione una opcion</option>
+                <option value="1">Verdadero</option>
+                <option value="0">Falso</option>
+              </select>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade bd-example-modal-lg" id="resultadoModal" tabindex="-1" role="dialog" aria-labelledby="resultadoModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Preguntas</th>
+                <th scope="col">Puntaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inteligencia of respuesta">
+                <th scope="row">{{inteligencia.nombre}}</th>
+                <td>
+                  <ng-container *ngFor="let posicion of inteligencia.posiciones;let i = index">
+                    <ng-container *ngIf="i == 0">{{ posicion }}</ng-container>
+                    <ng-container *ngIf="i != 0">,{{ posicion }}</ng-container>
+                  </ng-container>
+                </td>
+                <td>
+                  <b>{{inteligencia.resultado}}</b>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="init()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
